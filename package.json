@@ -1,8 +1,8 @@
 {
-  "name": "vue-admin-template",
+  "name": "run",
   "version": "4.4.0",
-  "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "description": "代办（办理各种业务...）：代取（取快递等...）;代购（买菜，买药，买零食等...);代接送（接送孩子等...）;",
+  "author": "dl13887915485@163.com",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",

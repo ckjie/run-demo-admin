@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <Tinymce :height="300" v-model="content" id="Tinymce"></Tinymce>
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="Activity name">
         <el-input v-model="form.name" />
@@ -48,9 +49,15 @@
 </template>
 
 <script>
+import Tinymce from '@/components/Tinymce'
 export default {
+  components: {
+    Tinymce
+  },
+
   data() {
     return {
+      content: '',
       form: {
         name: '',
         region: '',
