@@ -13,7 +13,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="请输入用户名"
           name="username"
           type="text"
           tabindex="1"
@@ -30,7 +30,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       loginForm: {
-        username: 'tzcAdmin',
+        username: 'admin',
         password: '123456'
       },
       loginRules: {
@@ -74,6 +74,7 @@ export default {
   watch: {
     $route: {
       handler: function(route) {
+        console.log(99999)
         this.redirect = route.query && route.query.redirect
       },
       immediate: true

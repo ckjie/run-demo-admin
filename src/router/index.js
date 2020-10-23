@@ -46,13 +46,39 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
+    redirect: '/menu',
+    children: [
+      {
+        path: 'menu',
+        name: 'Menu',
+        component: () => import('@/views/menu/index'),
+        meta: { title: '菜单管理', icon: 'nested' }
+      },
+      {
+        path: 'menu/add',
+        name: 'Add',
+        hidden: true,
+        activeMenu: '/menu',
+        component: () => import('@/views/menu/add'),
+        meta: { title: '新增菜单' }
+      },
+      {
+        path: 'menu/edit',
+        name: 'Edit',
+        hidden: true,
+        activeMenu: '/menu',
+        component: () => import('@/views/menu/add'),
+        meta: { title: '菜单编辑' }
+      },
+      {
+        path: 'menu/detail',
+        name: 'Detail',
+        hidden: true,
+        activeMenu: '/menu',
+        component: () => import('@/views/menu/detail'),
+        meta: { title: '菜单详情' }
+      }
+    ]
   },
 
   {
@@ -154,7 +180,7 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  mode: 'history', // require service support
+  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

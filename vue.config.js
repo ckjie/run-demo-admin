@@ -33,13 +33,10 @@ module.exports = {
   devServer: {
     port: port,
     open: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    },
+    host: '0.0.0.0',
     proxy: {
-      '/api': {
-        target: 'https://mpsubjects.by-health.com',    // 目标代理服务器地址
+      '/': {
+        target: 'https://www.it-demo.top/',    // 目标代理服务器地址
         changeOrigin: true    // 允许跨域
       }
     }

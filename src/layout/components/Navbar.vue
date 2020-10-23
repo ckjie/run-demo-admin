@@ -5,29 +5,48 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
+      <el-dropdown class="avatar-container">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+          <img src="@/assets/images/logo.png" class="user-avatar">
+          <i class="el-icon-arrow-down" />
         </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item divided @click.native="logout">
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="showPswDialog = true">修改密码</el-dropdown-item>
+          <!-- <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Log Out</span>
-          </el-dropdown-item>
+          </el-dropdown-item> -->
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+
+    <el-dialog
+      :visible.sync="showPswDialog"
+      width="30%"
+      append-to-body
+      center
+      @close="closePswDialog"
+    >
+      <div slot="title">
+        <div class="YTitle text-align-left">修改密码</div>
+      </div>
+      <div v-loading="dialogLoading">
+        <el-form ref="pswForm" :model="form" :rules="rules" inline label-width="100px" class="psw-form">
+          <el-form-item label="旧密码：" prop="oldPsw">
+            <el-input v-model="form.oldPsw" size="small" placeholder="请输入旧密码" />
+          </el-form-item>
+          <el-form-item label="新密码：" prop="psw">
+            <el-input v-model="form.psw" size="small" placeholder="请输入新密码" />
+          </el-form-item>
+          <el-form-item label="确认密码：" prop="psw2">
+            <el-input v-model="form.psw2" size="small" placeholder="再次输入密码" />
+          </el-form-item>
+        </el-form>
+      </div>
+      <div slot="footer">
+        <el-button size="small" @click="showPswDialog = false">取消</el-button>
+        <el-button type="primary" size="small">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -41,6 +60,54 @@ export default {
     Breadcrumb,
     Hamburger
   },
+
+  data() {
+    const oldPswRule = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入旧密码'))
+      } else if (value.length < 6) {
+        callback(new Error('密码格式有误'))
+      } else {
+        callback()
+      }
+    }
+    const pswRule = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入新密码'))
+      } else {
+        callback()
+      }
+    }
+    const psw2Rule = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入新密码'))
+      } else {
+        callback()
+      }
+    }
+
+    return {
+      showPswDialog: false,
+      dialogLoading: false,
+      form: {
+        oldPsw: '',
+        psw: '',
+        psw2: ''
+      },
+      rules: {
+        oldPsw: [
+          { required: true, validator: oldPswRule, trigger: 'blur' }
+        ],
+        psw: [
+          { required: true, validator: pswRule, trigger: 'blur' }
+        ],
+        psw2: [
+          { required: true, validator: psw2Rule, trigger: 'blur' }
+        ]
+      }
+    }
+  },
+
   computed: {
     ...mapGetters([
       'sidebar',
@@ -54,6 +121,11 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+
+    closePswDialog() {
+      this.$refs.pswForm.resetFields()
+      console.log('closePswDialog')
     }
   }
 }
@@ -88,6 +160,7 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
+    padding-right: 30px;
 
     &:focus {
       outline: none;
@@ -115,25 +188,23 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
+        cursor: pointer;
         margin-top: 5px;
         position: relative;
+        display: flex;
+        align-items: center;
 
         .user-avatar {
-          cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
+          margin-right: 5px;
         }
       }
     }
   }
+}
+
+.psw-form {
+  text-align: center;
 }
 </style>

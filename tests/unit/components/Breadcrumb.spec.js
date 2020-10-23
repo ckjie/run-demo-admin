@@ -12,8 +12,8 @@ const routes = [
     path: '/',
     name: 'home',
     children: [{
-      path: 'dashboard',
-      name: 'dashboard'
+      path: 'menu',
+      name: 'nemu'
     }]
   },
   {
@@ -55,8 +55,8 @@ describe('Breadcrumb.vue', () => {
     localVue,
     router
   })
-  it('dashboard', () => {
-    router.push('/dashboard')
+  it('menu', () => {
+    router.push('/menu')
     const len = wrapper.findAll('.el-breadcrumb__inner').length
     expect(len).toBe(1)
   })

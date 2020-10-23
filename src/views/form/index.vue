@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <Tinymce :height="300" v-model="content" id="Tinymce"></Tinymce>
+    <Tinymce id="Tinymce" v-model="content" :height="300" />
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="Activity name">
         <el-input v-model="form.name" />

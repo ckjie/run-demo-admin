@@ -135,7 +135,7 @@ export default {
         link_title: false,
         branding: false,
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
-        content_style: "p {margin: 0}",
+        content_style: 'p {margin: 0}',
         init_instance_callback: editor => {
           if (_this.value) {
             editor.setContent(_this.value)

@@ -63,3 +63,52 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+.page {}
+
+.table-module, .pagination-module {
+  margin: 20px 0;
+}
+
+.pagination-module {
+  text-align: center;
+}
+
+.main-form {
+  .el-input, .el-textarea {
+    width: 300px;
+  }
+}
+
+.pic-item-box {
+  position: relative;
+  cursor: pointer;
+  .pic-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    visibility: hidden;
+    pointer-events: none;
+    font-size: 18px;
+  }
+  &:hover .pic-mask{
+    visibility: visible;
+  }
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.bottom-btns {
+  margin: 20px 0;
+  text-align: center;
+}
