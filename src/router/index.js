@@ -82,6 +82,19 @@ export const constantRoutes = [
   },
 
   {
+    path: '/rider',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'Rider',
+        component: () => import('@/views/rider/index'),
+        meta: { title: '骑手列表', icon: 'form' }
+      }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
