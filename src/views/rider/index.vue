@@ -62,11 +62,29 @@
         @current-change="currentChange"
       />
     </div>
+
+    <el-dialog
+      class="input-dialog"
+      :visible.sync="showInputDialog"
+      width="25%"
+      append-to-body
+      center
+      @close="closeInputDialog">
+      <div slot="title">
+        <div>拒绝申请</div>
+      </div>
+      <div class="body">
+        <el-input v-model.trim="reason" type="text" size="small" maxlength="50" placeholder="请输入拒绝的原因"></el-input>
+      </div>
+      <div slot="footer">
+        <el-button round size="small" @click="showInputDialog = false">取消</el-button>
+        <el-button type="primary" size="small" round @click="confirmRefuse">{{ reason ? '确定' : '不填了，直接拒绝' }}</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-// import { getList, del, setTop, cancelTop } from '@/api/menu'
 import { getList, updateStatus } from '@/api/rider'
 
 export default {
@@ -74,6 +92,7 @@ export default {
   data() {
     return {
       loading: false,
+      showInputDialog: false,
       pic: 'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
       pageNum: 1,
       pageSize: 10,
@@ -82,7 +101,9 @@ export default {
         realname: '',
         phone: ''
       },
-      tableData: []
+      tableData: [],
+      reason: '',
+      currentItem: {}
     }
   },
 
@@ -106,33 +127,24 @@ export default {
       })
     },
 
-    // getData() {
-    //   this.loading = true
-    //   this.tableData.splice(0)
-    //   getList({
-    //     title: this.filterForm.title,
-    //     page: this.pageNum,
-    //     size: this.pageSize
-    //   }).then(res => {
-    //     this.loading = false
-    //     if (res.err_code !== 0) return
-    //     res.data.list.forEach(item => {
-    //       item.content && (item.content = JSON.parse(item.content))
-    //       item.picList = item.content ? item.content.picList : []
-    //       item.detail = item.content ? item.content.detail : ''
-    //       this.tableData.push(item)
-    //     })
-    //     this.Total = +res.data.count
-    //   })
-    // },
-
     changeStatus (courier_id, status) {
+      if (status === 2 && !this.showInputDialog) {
+        this.showInputDialog = true
+        this.currentItem = Object.assign({}, this.currentItem, {
+          courier_id,
+          status
+        })
+        return
+      }
       this.loading = true
-      updateStatus({
+      const params = {
         courier_id,
         status
-      }).then(res => {
+      }
+      this.reason && (params.reason = this.reason)
+      updateStatus(params).then(res => {
         this.loading = false
+        this.showInputDialog && (this.showInputDialog = false)
         if (res.err_code !== 0) return
         this.$message.success('操作成功')
         this.getData()
@@ -143,59 +155,6 @@ export default {
       this.$refs.filterForm.resetFields()
     },
 
-    toAddPage(id) {
-      this.$router.push({
-        name: id ? 'Edit' : 'Add',
-        params: { id }
-      })
-    },
-
-    delMenu (menu_id) {
-      this.$confirm('确认删除该菜单？', '提示', {
-        confirmButtonText: '删除',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.loading = true
-        del({menu_id}).then(res => {
-          this.loading = false
-          if (res.err_code === 0) {
-            this.$message.success('删除成功')
-            this.getData()
-          }
-        })
-      }).catch(() => {})
-    },
-
-    setTop (menu_id) {
-      this.loading = true
-      setTop({menu_id}).then(res => {
-        if (res.err_code === 0) {
-          this.$message.success('置顶成功')
-          this.getData()
-        }
-      })
-    },
-
-    cancelTop (menu_id) {
-      this.loading = true
-      cancelTop({menu_id}).then(res => {
-        if (res.err_code === 0) {
-          this.$message.success('取消置顶成功')
-          this.getData()
-        }
-      })
-    },
-
-    toDetailPage (id) {
-      this.$router.push({
-        name: 'Detail',
-        params: {
-          id
-        }
-      })
-    },
-
     currentChange(val) {
       this.pageNum = val
       this.getData()
@@ -204,6 +163,14 @@ export default {
       this.pageNum = 1
       this.pageSize = val
       this.getData()
+    },
+
+    closeInputDialog () {
+      this.reason = ''
+    },
+
+    confirmRefuse () {
+      this.changeStatus(this.currentItem.courier_id, this.currentItem.status)
     }
   }
 }
@@ -231,6 +198,12 @@ export default {
   .avatar {
     width: 100%;
     height: 100%;
+  }
+}
+
+.input-dialog {
+  .body {
+    padding-top: 20px;
   }
 }
 </style>
