@@ -2,7 +2,7 @@
   <div v-loading="loading" class="page">
     <el-form ref="addForm" :model="formData" :rules="rules" class="main-form" label-width="120px">
       <el-form-item label="标题 ：" prop="title">
-        <el-input v-model="formData.title" maxlength="20" size="small" placeholder="请输入标题" show-word-limit></el-input>
+        <el-input v-model="formData.title" maxlength="20" size="small" placeholder="请输入标题" show-word-limit />
       </el-form-item>
       <el-form-item label="头像 ：" prop="avatar">
         <el-upload
@@ -10,13 +10,14 @@
           action="https://jsonplaceholder.typicode.com/posts/"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
-          :before-upload="beforeUpload">
+          :before-upload="beforeUpload"
+        >
           <img v-if="formData.avatar" :src="formData.avatar" class="avatar pic-item" fit="contain">
-          <i v-else class="el-icon-plus pic-uploader-icon"></i>
+          <i v-else class="el-icon-plus pic-uploader-icon" />
         </el-upload>
       </el-form-item>
       <el-form-item label="描述 ：" prop="content">
-        <el-input type="textarea" v-model="formData.content" maxlength="200" size="small" placeholder="请输入描述信息" show-word-limit></el-input>
+        <el-input v-model="formData.content" type="textarea" maxlength="200" size="small" placeholder="请输入描述信息" show-word-limit />
       </el-form-item>
       <el-form-item label="图片列表 ：" prop="picList">
         <el-upload
@@ -27,8 +28,9 @@
           :on-success="handlePicitemSuccess"
           :before-upload="beforeUpload"
           :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove">
-          <i class="el-icon-plus pic-uploader-icon"></i>
+          :on-remove="handleRemove"
+        >
+          <i class="el-icon-plus pic-uploader-icon" />
           <div slot="tip" class="tip-text">（注：最多支持上传9张图片，单张图片不可超过5M）</div>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
@@ -97,16 +99,16 @@ export default {
     }
   },
 
-  created () {
-    if (this.$route.params.id) {
-      this.getMenu(this.$route.params.id)
+  created() {
+    if (this.$route.query.id) {
+      this.getMenu(this.$route.query.id)
     }
   },
 
   methods: {
-    getMenu (menu_id) {
+    getMenu(menu_id) {
       this.loading = true
-      one({menu_id}).then(res => {
+      one({ menu_id }).then(res => {
         this.loading = false
         if (res.err_code !== 0) return
         res.data.content && (res.data.content = JSON.parse(res.data.content))
@@ -118,20 +120,20 @@ export default {
         })
       })
     },
-    handleAvatarSuccess (file) {
+    handleAvatarSuccess(file) {
       // this.formData.avatar = URL.createObjectURL(file.raw)
     },
-    handlePicitemSuccess (file) {
+    handlePicitemSuccess(file) {
       console.log(file, 'fff')
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      console.log(file, fileList)
     },
     handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
     },
-    beforeUpload (file) {
+    beforeUpload(file) {
       const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
       const isLt2M = file.size / 1024 / 1024 < 5
       if (!isJPG) {
@@ -143,11 +145,11 @@ export default {
       return isJPG && isLt2M
     },
 
-    backPage () {
+    backPage() {
       this.$router.back()
     },
 
-    saveMenu () {
+    saveMenu() {
       const canContinue = new Promise((resolve, reject) => {
         this.$refs.addForm.validate(valid => {
           if (valid) resolve()

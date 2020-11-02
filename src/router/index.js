@@ -52,31 +52,28 @@ export const constantRoutes = [
         path: 'menu',
         name: 'Menu',
         component: () => import('@/views/menu/index'),
-        meta: { title: '菜单管理', icon: 'nested' }
+        meta: { title: '菜单管理', icon: 'table' }
       },
       {
         path: 'menu/add',
-        name: 'Add',
+        name: 'addMenu',
         hidden: true,
-        activeMenu: '/menu',
         component: () => import('@/views/menu/add'),
-        meta: { title: '新增菜单' }
+        meta: { title: '新增菜单', activeMenu: '/menu' }
       },
       {
         path: 'menu/edit',
-        name: 'Edit',
+        name: 'editMenu',
         hidden: true,
-        activeMenu: '/menu',
         component: () => import('@/views/menu/add'),
-        meta: { title: '菜单编辑' }
+        meta: { title: '菜单编辑', activeMenu: '/menu' }
       },
       {
         path: 'menu/detail',
-        name: 'Detail',
+        name: 'menuDetail',
         hidden: true,
-        activeMenu: '/menu',
         component: () => import('@/views/menu/detail'),
-        meta: { title: '菜单详情' }
+        meta: { title: '菜单详情', activeMenu: '/menu' }
       }
     ]
   },
@@ -95,98 +92,37 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
+    path: '/order',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: '',
+        name: 'Order',
+        component: () => import('@/views/order/index'),
+        meta: { title: '订单列表', icon: 'nested' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'detail',
+        name: 'orderDetail',
+        hidden: true,
+        component: () => import('@/views/order/detail'),
+        meta: { title: '订单详情', activeMenu: '/order' }
       }
     ]
   },
 
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
+  // {
+  //   path: '/form',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Form',
+  //       component: () => import('@/views/form/index'),
+  //       meta: { title: 'Form', icon: 'form' }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

@@ -15,35 +15,6 @@ const routes = [
       path: 'menu',
       name: 'nemu'
     }]
-  },
-  {
-    path: '/menu',
-    name: 'menu',
-    children: [{
-      path: 'menu1',
-      name: 'menu1',
-      meta: { title: 'menu1' },
-      children: [{
-        path: 'menu1-1',
-        name: 'menu1-1',
-        meta: { title: 'menu1-1' }
-      },
-      {
-        path: 'menu1-2',
-        name: 'menu1-2',
-        redirect: 'noredirect',
-        meta: { title: 'menu1-2' },
-        children: [{
-          path: 'menu1-2-1',
-          name: 'menu1-2-1',
-          meta: { title: 'menu1-2-1' }
-        },
-        {
-          path: 'menu1-2-2',
-          name: 'menu1-2-2'
-        }]
-      }]
-    }]
   }]
 
 const router = new VueRouter({
@@ -60,21 +31,21 @@ describe('Breadcrumb.vue', () => {
     const len = wrapper.findAll('.el-breadcrumb__inner').length
     expect(len).toBe(1)
   })
-  it('normal route', () => {
-    router.push('/menu/menu1')
-    const len = wrapper.findAll('.el-breadcrumb__inner').length
-    expect(len).toBe(2)
-  })
-  it('nested route', () => {
-    router.push('/menu/menu1/menu1-2/menu1-2-1')
-    const len = wrapper.findAll('.el-breadcrumb__inner').length
-    expect(len).toBe(4)
-  })
-  it('no meta.title', () => {
-    router.push('/menu/menu1/menu1-2/menu1-2-2')
-    const len = wrapper.findAll('.el-breadcrumb__inner').length
-    expect(len).toBe(3)
-  })
+  // it('normal route', () => {
+  //   router.push('/menu/menu1')
+  //   const len = wrapper.findAll('.el-breadcrumb__inner').length
+  //   expect(len).toBe(2)
+  // })
+  // it('nested route', () => {
+  //   router.push('/menu/menu1/menu1-2/menu1-2-1')
+  //   const len = wrapper.findAll('.el-breadcrumb__inner').length
+  //   expect(len).toBe(4)
+  // })
+  // it('no meta.title', () => {
+  //   router.push('/menu/menu1/menu1-2/menu1-2-2')
+  //   const len = wrapper.findAll('.el-breadcrumb__inner').length
+  //   expect(len).toBe(3)
+  // })
   // it('click link', () => {
   //   router.push('/menu/menu1/menu1-2/menu1-2-2')
   //   const breadcrumbArray = wrapper.findAll('.el-breadcrumb__inner')

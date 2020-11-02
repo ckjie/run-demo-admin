@@ -17,22 +17,21 @@
     </div>
     <div class="table-module">
       <el-table :data="tableData" size="small" style="width: 100%" border>
-        
         <el-table-column label="头像" prop="avatar" align="center" width="90px">
           <template #default="{row}">
             <div class="pic-item-box">
-              <el-image class="avatar" :src="row.avatar || pic" fit="cover" :previewSrcList="[pic]" />
-              <div class="pic-mask"><i class="el-icon-view"></i></div>
+              <el-image class="avatar" :src="row.avatar || pic" fit="cover" :preview-src-list="[pic]" />
+              <div class="pic-mask"><i class="el-icon-view" /></div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="姓名" prop="realname" align="center"></el-table-column>
+        <el-table-column label="姓名" prop="realname" align="center" />
         <el-table-column label="性别" align="center">
           <template #default="{ row }">
             <span>{{ row.sex === '0' ? '男' : '女' }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="手机" prop="phone" align="center"></el-table-column>
+        <el-table-column label="手机" prop="phone" align="center" />
         <el-table-column label="状态" align="center">
           <template #default="{ row }">
             <span v-if="row.status === '0'">待审核</span>
@@ -69,12 +68,13 @@
       width="25%"
       append-to-body
       center
-      @close="closeInputDialog">
+      @close="closeInputDialog"
+    >
       <div slot="title">
         <div>拒绝申请</div>
       </div>
       <div class="body">
-        <el-input v-model.trim="reason" type="text" size="small" maxlength="50" placeholder="请输入拒绝的原因"></el-input>
+        <el-input v-model.trim="reason" type="text" size="small" maxlength="50" placeholder="请输入拒绝的原因" />
       </div>
       <div slot="footer">
         <el-button round size="small" @click="showInputDialog = false">取消</el-button>
@@ -109,11 +109,10 @@ export default {
 
   created() {
     this.getData()
-
   },
 
   methods: {
-    getData () {
+    getData() {
       this.loading = true
       const params = {
         ...this.filterForm,
@@ -123,11 +122,12 @@ export default {
       getList(params).then(res => {
         this.loading = false
         if (res.err_code !== 0) return
-        this.tableData = res.data
+        this.tableData = res.data.list
+        this.Total = +res.data.count
       })
     },
 
-    changeStatus (courier_id, status) {
+    changeStatus(courier_id, status) {
       if (status === 2 && !this.showInputDialog) {
         this.showInputDialog = true
         this.currentItem = Object.assign({}, this.currentItem, {
@@ -165,11 +165,11 @@ export default {
       this.getData()
     },
 
-    closeInputDialog () {
+    closeInputDialog() {
       this.reason = ''
     },
 
-    confirmRefuse () {
+    confirmRefuse() {
       this.changeStatus(this.currentItem.courier_id, this.currentItem.status)
     }
   }

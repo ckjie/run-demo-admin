@@ -5,7 +5,7 @@
         <span>{{ detail.title }}</span>
       </el-form-item>
       <el-form-item label="头像 ：">
-        <el-image class="pic-item" :src="detail.avatar" fit="cover" :previewSrcList="[detail.avatar]"></el-image>
+        <el-image class="pic-item" :src="detail.avatar" fit="cover" :preview-src-list="[detail.avatar]" />
       </el-form-item>
       <el-form-item label="描述 ：">
         <div class="detail-content">{{ detail.content }}</div>
@@ -19,7 +19,7 @@
       </el-form-item>
     </el-form>
     <div class="bottom-btns">
-      <el-button size="small" round plain @click="backPage">取消</el-button>
+      <el-button size="small" round plain @click="backPage">返回</el-button>
     </div>
 
     <el-dialog :visible.sync="dialogVisible">
@@ -31,7 +31,7 @@
 <script>
 import { one } from '@/api/menu'
 export default {
-  data () {
+  data() {
     return {
       loading: false,
       dialogVisible: false,
@@ -40,14 +40,16 @@ export default {
     }
   },
 
-  created () {
-    this.getData(this.$route.params.id)
+  created() {
+    if (this.$route.query.id) {
+      this.getData(this.$route.query.id)
+    }
   },
 
   methods: {
-    getData (menu_id) {
+    getData(menu_id) {
       this.loading = true
-      one({menu_id}).then(res => {
+      one({ menu_id }).then(res => {
         this.loading = false
         if (res.err_code !== 0) return
         res.data.content && (res.data.content = JSON.parse(res.data.content))
@@ -63,7 +65,7 @@ export default {
       })
     },
 
-    backPage () {
+    backPage() {
       this.$router.back()
     }
   }

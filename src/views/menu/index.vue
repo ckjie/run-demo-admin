@@ -26,23 +26,23 @@
     </div>
     <div class="table-module">
       <el-table :data="tableData" size="small" style="width: 100%" border>
-        <el-table-column label="标题" prop="title" align="center" width="140px"></el-table-column>
+        <el-table-column label="标题" prop="title" align="center" width="140px" />
         <el-table-column label="头像" prop="avatar" align="center" width="90px">
           <template #default="{row}">
             <div class="pic-item-box">
-              <el-image class="avatar" :src="row.avatar || pic" fit="cover" :previewSrcList="[pic]" />
-              <div class="pic-mask"><i class="el-icon-view"></i></div>
+              <el-image class="avatar" :src="row.avatar || pic" fit="cover" :preview-src-list="[pic]" />
+              <div class="pic-mask"><i class="el-icon-view" /></div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="描述" prop="detail" align="center" show-overflow-tooltip></el-table-column>
+        <el-table-column label="描述" prop="detail" align="center" show-overflow-tooltip />
         <el-table-column label="图片列表" prop="picList" align="center">
           <!-- <template #default="{row}"> -->
           <template>
             <div class="flex pic-list">
               <div v-for="(item, index) in list" :key="index" class="pic-item-box">
-                <el-image class="avatar" :src="item" fit="cover" :previewSrcList="list" />
-                <div class="pic-mask"><i class="el-icon-view"></i></div>
+                <el-image class="avatar" :src="item" fit="cover" :preview-src-list="list" />
+                <div class="pic-mask"><i class="el-icon-view" /></div>
               </div>
             </div>
           </template>
@@ -134,19 +134,19 @@ export default {
 
     toAddPage(id) {
       this.$router.push({
-        name: id ? 'Edit' : 'Add',
-        params: { id }
+        name: id ? 'editMenu' : 'addMenu',
+        query: { id }
       })
     },
 
-    delMenu (menu_id) {
+    delMenu(menu_id) {
       this.$confirm('确认删除该菜单？', '提示', {
         confirmButtonText: '删除',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         this.loading = true
-        del({menu_id}).then(res => {
+        del({ menu_id }).then(res => {
           this.loading = false
           if (res.err_code === 0) {
             this.$message.success('删除成功')
@@ -156,9 +156,9 @@ export default {
       }).catch(() => {})
     },
 
-    setTop (menu_id) {
+    setTop(menu_id) {
       this.loading = true
-      setTop({menu_id}).then(res => {
+      setTop({ menu_id }).then(res => {
         if (res.err_code === 0) {
           this.$message.success('置顶成功')
           this.getData()
@@ -166,9 +166,9 @@ export default {
       })
     },
 
-    cancelTop (menu_id) {
+    cancelTop(menu_id) {
       this.loading = true
-      cancelTop({menu_id}).then(res => {
+      cancelTop({ menu_id }).then(res => {
         if (res.err_code === 0) {
           this.$message.success('取消置顶成功')
           this.getData()
@@ -176,10 +176,10 @@ export default {
       })
     },
 
-    toDetailPage (id) {
+    toDetailPage(id) {
       this.$router.push({
-        name: 'Detail',
-        params: {
+        name: 'menuDetail',
+        query: {
           id
         }
       })
