@@ -28,8 +28,8 @@
       </el-form-item>
       <el-form-item v-if="detail.type === '1'" label="购买地址 ：" class="fill-row">
         <div v-if="detail.params && detail.params.buyType === 'address'">
-          <!-- <span>{{ detail.params.buyAddress.address }}</span>
-          <span>（联系人：{{ detail.params.buyAddress.realname }} {{ detail.params.buyAddress.phone }}）</span> -->
+          <span>{{ detail.params.buyAddress.address }}</span>
+          <span>（联系人：{{ detail.params.buyAddress.realname }} {{ detail.params.buyAddress.phone }}）</span>
         </div>
         <div v-else>就近购买</div>
       </el-form-item>

@@ -81,7 +81,6 @@ export default {
 .detail-content {
   width: 50%;
   word-break: break-all;
-  line-height: 1.8;
 }
 .pic-carousel {
   width: 400px;
