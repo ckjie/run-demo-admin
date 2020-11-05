@@ -30,23 +30,23 @@
         <el-table-column label="头像" prop="avatar" align="center" width="90px">
           <template #default="{row}">
             <div class="pic-item-box">
-              <el-image class="avatar" :src="row.avatar || pic" fit="cover" :preview-src-list="[pic]" />
+              <el-image class="avatar" :src="row.avatar || pic" fit="cover" :preview-src-list="[row.avatar || pic]" />
               <div class="pic-mask"><i class="el-icon-view" /></div>
             </div>
           </template>
         </el-table-column>
         <el-table-column label="描述" prop="detail" align="center" show-overflow-tooltip />
         <el-table-column label="图片列表" prop="picList" align="center">
-          <!-- <template #default="{row}"> -->
+          <template #default="{row}">
           <template>
             <div class="flex pic-list">
-              <div v-for="(item, index) in list" :key="index" class="pic-item-box">
-                <el-image class="avatar" :src="item" fit="cover" :preview-src-list="list" />
+              <div v-for="(item, index) in row.content.picList" :key="index" class="pic-item-box">
+                <el-image class="avatar" :src="item" fit="cover" :preview-src-list="row.content.picList" />
                 <div class="pic-mask"><i class="el-icon-view" /></div>
               </div>
             </div>
           </template>
-          <!-- </template> -->
+          </template>
         </el-table-column>
         <el-table-column label="操作" align="center" width="120">
           <template slot-scope="scope">
@@ -81,18 +81,7 @@ export default {
   data() {
     return {
       loading: false,
-      pic: 'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
-      list: [
-        'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
-        'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
-        'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
-        'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
-        'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
-        'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
-        'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
-        'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
-        'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png'
-      ],
+      pic: require('@/assets/images/pic-loading.png'),
       pageNum: 1,
       pageSize: 10,
       Total: 0,

@@ -20,7 +20,7 @@
         <el-table-column label="头像" prop="avatar" align="center" width="90px">
           <template #default="{row}">
             <div class="pic-item-box">
-              <el-image class="avatar" :src="row.avatar || pic" fit="cover" :preview-src-list="[pic]" />
+              <el-image class="avatar" :src="row.avatar || pic" fit="cover" :preview-src-list="[row.avatar || pic]" />
               <div class="pic-mask"><i class="el-icon-view" /></div>
             </div>
           </template>
@@ -93,7 +93,7 @@ export default {
     return {
       loading: false,
       showInputDialog: false,
-      pic: 'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
+      pic: require('@/assets/images/pic-loading.png'),
       pageNum: 1,
       pageSize: 10,
       Total: 0,

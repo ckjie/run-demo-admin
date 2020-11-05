@@ -5,7 +5,8 @@ const state = {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
+  device: 'desktop',
+  ossHost: 'https://it-demo.oss-cn-beijing.aliyuncs.com/'
 }
 
 const mutations = {

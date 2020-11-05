@@ -28,8 +28,8 @@
       </el-form-item>
       <el-form-item v-if="detail.type === '1'" label="购买地址 ：" class="fill-row">
         <div v-if="detail.params && detail.params.buyType === 'address'">
-          <span>{{ detail.params.buyAddress.address }}</span>
-          <span>（联系人：{{ detail.params.buyAddress.realname }} {{ detail.params.buyAddress.phone }}）</span>
+          <span>{{ detail.params.buyAddress.address }} - {{detail.params.buyAddress.name}}</span>
+          <!-- <span>（联系人：{{ detail.params.buyAddress.realname }} {{ detail.params.buyAddress.phone }}）</span> -->
         </div>
         <div v-else>就近购买</div>
       </el-form-item>
@@ -99,16 +99,18 @@
           <div>{{ detail.params.deliveryAddress || '--' }}</div>
         </el-form-item>
       </div>
-      <!-- <el-form-item label="头像 ：">
-        <el-image class="pic-item" :src="detail.avatar" fit="cover" :preview-src-list="[detail.avatar]" />
-      </el-form-item> -->
-      <!-- <el-form-item label="图片列表 ：">
-        <el-carousel class="pic-carousel" :interval="4000" type="card" height="200px" indicator-position="none">
-          <el-carousel-item v-for="(item, index) in detail.picList" :key="index">
-            <img class="carousel-pic-item" :src="item" @click="dialogVisible = true; dialogImageUrl = item">
-          </el-carousel-item>
-        </el-carousel>
-      </el-form-item> -->
+      <div v-if="detail.params && detail.params.sound">
+        <el-form-item label="录音 ：" class="fill-row">
+          <audio :src="detail.params.sound" controls="controls"></audio>
+        </el-form-item>
+      </div>
+      <div v-if="detail.params && detail.params.picList">
+        <el-form-item label="图片 ：" class="fill-row">
+          <div class="pic-list">
+            <el-image class="pic-item" v-for="item in detail.params.picList" :key="item" :src="item" :preview-src-list="detail.params.picList" :fit="'cover'"></el-image>
+          </div>
+        </el-form-item>
+      </div>
     </el-form>
     <div class="bottom-btns">
       <el-button size="small" round plain @click="backPage">返回</el-button>
@@ -154,10 +156,11 @@ export default {
   methods: {
     getData(order_hash) {
       this.loading = true
-      getDetail({order_hash}).then(res => {
+      getDetail({ order_hash }).then(res => {
         this.loading = false
         if (res.err_code !== 0) return
         res.data.addition.params = JSON.parse(res.data.addition.params)
+        res.data.addition.params.picList && (res.data.addition.params.picList = JSON.parse(res.data.addition.params.picList))
         const info = {
           ...res.data.addition,
           ...res.data
@@ -166,7 +169,6 @@ export default {
         this.detail = info
         console.log(info, 'rrr')
       })
-
     },
 
     backPage() {
@@ -194,12 +196,16 @@ export default {
 .detail-content {
   word-break: break-all;
 }
-.pic-carousel {
-  width: 400px;
-  .carousel-pic-item {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+
+.pic-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  .pic-item {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    margin-bottom: 10px;
   }
 }
 </style>

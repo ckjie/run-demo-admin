@@ -4,7 +4,7 @@
       <el-form ref="filterForm" :model="filterForm" inline class="form">
         <el-form-item label="订单状态" prop="status">
           <el-select v-model="filterForm.status" size="small">
-            <el-option v-for="item in statusList" :key="item.label" :label="item.label" :value="item.value"></el-option>
+            <el-option v-for="item in statusList" :key="item.label" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item class="btn-list">
@@ -84,7 +84,7 @@
         <el-table-column label="操作" align="center" width="100">
           <template #default="{ row }">
             <el-button type="text" size="small" @click="toDetail(row.order_hash)">详情</el-button>
-            <el-button v-if="['1', '2', '3', '4'].includes(row.status)" type="text" size="small" style="color: red" @click="refundPrice(row.order_hash)">退款</el-button>
+            <el-button v-if="['1', '2', '3', '4'].includes(row.status)" type="text" size="small" style="color: red" @click="refundPrice(row)">退款</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -124,7 +124,6 @@ export default {
     return {
       loading: false,
       showInputDialog: false,
-      pic: 'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
       pageNum: 1,
       pageSize: 10,
       Total: 0,
@@ -176,7 +175,7 @@ export default {
       })
     },
 
-    toDetail (order_hash) {
+    toDetail(order_hash) {
       this.$router.push({
         name: 'orderDetail',
         query: {
@@ -185,7 +184,8 @@ export default {
       })
     },
 
-    refundPrice (row) {
+    refundPrice(row) {
+      console.log(row, 'rrrr')
       this.$confirm('确认对该订单进行退款操作？', '提示', {
         confirmButtonText: '退款',
         cancelButtonText: '取消',

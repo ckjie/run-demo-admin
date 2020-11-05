@@ -55,13 +55,10 @@ export default {
         res.data.content && (res.data.content = JSON.parse(res.data.content))
         this.detail = Object.assign({}, this.detail, {
           title: res.data.title,
-          avatar: res.data.avatar || 'https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png',
+          avatar: res.data.avatar || require('@/assets/images/pic-loading.png'),
           content: res.data.content ? res.data.content.detail : '',
           picList: res.data.content ? res.data.content.picList : []
         })
-        for (let i = 0; i < 9; i++) {
-          this.detail.picList.push('https://img.yasuotu.com/uploads/moban/self/2019/11/12/thumb/67825e4cd63629194d4c4c9b9e95d4d6.png')
-        }
       })
     },
 
