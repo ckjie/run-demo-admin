@@ -11,9 +11,9 @@
           <el-button type="primary" size="small" round @click="pageNum = 1; getData()">查询</el-button>
           <el-button size="small" round @click="resetForm">重置</el-button>
         </el-form-item>
-
       </el-form>
     </div>
+
     <div class="table-module">
       <el-table :data="tableData" size="small" style="width: 100%" border>
         <el-table-column label="订单类型" align="center">

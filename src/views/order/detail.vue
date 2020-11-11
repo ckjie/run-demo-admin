@@ -29,30 +29,33 @@
       <el-form-item v-if="detail.type === '1'" label="购买地址 ：" class="fill-row">
         <div v-if="detail.params && detail.params.buyType === 'address'">
           <span>{{ detail.params.buyAddress.address }} - {{detail.params.buyAddress.name}}</span>
-          <!-- <span>（联系人：{{ detail.params.buyAddress.realname }} {{ detail.params.buyAddress.phone }}）</span> -->
         </div>
         <div v-else>就近购买</div>
+      </el-form-item>
+      <el-form-item v-else-if="detail.type === '3' && detail.params && detail.params.transactAddress1" label="代办点1" class="fill-row">
+        <div>
+          <span>{{ detail.params.transactAddress1.address }}</span>
+          <span>（联系人：{{ detail.params.transactAddress1.realname }} {{ detail.params.transactAddress1.phone }}）</span>
+        </div>
       </el-form-item>
       <el-form-item v-else label="取货地址 ：" class="fill-row">
         <div v-if="detail.type === '2' && detail.params">
           <span>{{ detail.params.deliverAddress.address }}</span>
           <span>（联系人：{{ detail.params.deliverAddress.realname }} {{ detail.params.deliverAddress.phone }}）</span>
         </div>
-        <div v-if="detail.type === '3' && detail.params">
-          <span>{{ detail.params.transactAddress1.address }}</span>
-          <span>（联系人：{{ detail.params.transactAddress1.realname }} {{ detail.params.transactAddress1.phone }}）</span>
-        </div>
         <div v-if="detail.type === '4' && detail.params">
           <span>{{ detail.params.pickupAddress.address }}</span>
           <span>（联系人：{{ detail.params.pickupAddress.realname }} {{ detail.params.pickupAddress.phone }}）</span>
         </div>
       </el-form-item>
-      <el-form-item label="收货地址 ：" class="fill-row">
-        <div v-if="['1', '2', '4'].includes(detail.type) && detail.params">
+      <el-form-item v-if="['1', '2', '4'].includes(detail.type) && detail.params" label="收货地址 ：" class="fill-row">
+        <div>
           <span>{{ detail.params.receiptAddress.address }}</span>
           <span>（联系人：{{ detail.params.receiptAddress.realname }} {{ detail.params.receiptAddress.phone }}）</span>
         </div>
-        <div v-if="detail.type === '3' && detail.params">
+      </el-form-item>
+      <el-form-item v-else-if="detail.type === '3' && detail.params && detail.params.transactAddress2" label="代办点2" class="fill-row">
+        <div>
           <span>{{ detail.params.transactAddress2.address }}</span>
           <span>（联系人：{{ detail.params.transactAddress2.realname }} {{ detail.params.transactAddress2.phone }}）</span>
         </div>
