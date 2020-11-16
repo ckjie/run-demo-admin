@@ -8,6 +8,14 @@ export function login(data) {
   })
 }
 
+export function reset(data) {
+  return request({
+    url: '/admin/admin/reset-password',
+    method: 'post',
+    data
+  })
+}
+
 export function getInfo(token) {
   return request({
     url: '/vue-admin-template/user/info',

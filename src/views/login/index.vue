@@ -54,8 +54,8 @@ export default {
   data() {
     return {
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
@@ -69,7 +69,6 @@ export default {
   watch: {
     $route: {
       handler: function(route) {
-        console.log(99999)
         this.redirect = route.query && route.query.redirect
       },
       immediate: true

@@ -111,6 +111,19 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/config',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'Config',
+        component: () => import('@/views/config/index'),
+        meta: { title: '数据配置', icon: 'example' }
+      }
+    ]
+  },
+
   // {
   //   path: '/form',
   //   component: Layout,
